@@ -1,7 +1,7 @@
 ;;;Needs a package to go into
 (in-package :cljw)
 
-(defclass figure (domwidget)
+(defclass-widget-register figure (domwidget)
   ((title :initarg :title :accessor title
           :type unicode
           :initform nil

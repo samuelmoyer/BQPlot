@@ -42,7 +42,7 @@
    
   (:metaclass traitlets:traitlet-class))
 
-(defclass pan-zoom (interaction)
+(defclass-widget-register pan-zoom (interaction)
   ((allow-pan :accessor allow-pan
 	      :type bool
 	      :initform :true

@@ -491,10 +491,3 @@
    :view-name (unicode "DateColorScale")
     :model-name (unicode "DataColorScaleModel"))
    (:metaclass traitlets:traitlet-class))
-   
-   
-
-
-                         
-    
-
