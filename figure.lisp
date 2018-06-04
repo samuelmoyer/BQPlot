@@ -36,12 +36,12 @@
                              :json-name "scale_y"
                              *widget-serialization*))
    (title-style :initarg :title-style :accessor title-style
-                :type dict
-                :initform nil
+                :type list
+                :initform (list (cons 'trait (unicode "")))
                 :metadata (:sync t
                                  :json-name "title_style"))
    (background-style :initarg :background-style :accessor background-style
-                     :type dict
+                     :type list
                      :initform nil
                      :metadata (:sync t
                                      :json-name "background_style"))

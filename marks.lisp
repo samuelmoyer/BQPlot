@@ -85,15 +85,16 @@
 		     :type unicode
 		     :initform (unicode "mouse")
 		     :metadata (:sync t
-				      :json-name "tooltip_location"))
+				      :json-name "tooltip_location")))
    (:default-initargs
        :model-name (unicode "MarkModel")
      :model-module (unicode "bqplot")
      :view-module (unicode "bqplot")
      :view-module-version *frontend-version*
      :model-module-version *frontend-version*
-     :ipython-display nil)))
+     :ipython-display nil)
 
+    (:metaclass traitlets:traitlet-class))
 
 (defmethod %get-dimension-scales ((self mark) dimension &key (preserve-domain nil))
   (let ((ret nil))
@@ -248,10 +249,12 @@
 		   :initform nil
 		   :metadata (:sync t
 				    :json-name "fill_opacities"
-				    :display-name "Fill Opacity"))
+				    :display-name "Fill Opacity")))
    (:default-initargs
        :view-name (unicode "Lines")
-     :model-name (unicode "LinesModel"))))
+     :model-name (unicode "LinesModel"))
+
+    (:metaclass traitlets:traitlet-class))
 
 (defclass flex-line (mark)
   ((x :accessor x
@@ -312,10 +315,12 @@
 	   :type list
 	   :initform (list (cons 'trait (unicode "")(cons 'default-value CATEGORY10)))
 	   :metadata (:sync t
-			    :json-name "colors"))
+			    :json-name "colors")))
    (:default-initargs
        :view-name (unicode "FlexLine")
-     :model-name (unicode "FlexLineModel"))))
+     :model-name (unicode "FlexLineModel"))
+
+    (:metaclass traitlets:traitlet-class))
 
 (defclass %scatter-base (mark)
   ((x :initarg :x :accessor x
@@ -402,32 +407,34 @@
 		  :type int
 		  :initform nil
 		  :metadata (:sync t
-				   :json-name "hovered-point"))
+				   :json-name "hovered_point"))
    (enable-move :initarg :enable-move :accessor enable-move
 		:type bool
 		:initform :false
 		:metadata (:sync t
-				 :json-name "enable-move"))
+				 :json-name "enable_move"))
    (enable-delete :initarg :enable-delete :accessor enable-delete
 		  :type bool
 		  :initform :false
 		  :metadata (:sync t
-				   :json-name "enable-delete"))
+				   :json-name "enable_delete"))
    (restrict-x :initarg :restrict-x :accessor restrict-x
 	       :type bool
 	       :initform :false
 	       :metadata (:sync t
-				:json-name "restrict-x"))
+				:json-name "restrict_x"))
    (restrict-y :initarg :restrict-y :accessor restrict-y
 	       :type bool
 	       :initform :false
 	       :metadata (:sync t
-				:json-name "restrict-y"))
+				:json-name "restrict_y"))
    (update-on-move :initarg :update-on-move :accessor update-on-move
 		   :type bool
 		   :initform :false
 		   :metadata (:sync t
-				    :json-name "update-on-move"))))
+				    :json-name "update_on_move")))
+  
+   (:metaclass traitlets:traitlet-class))
 
    
 					;TODO: def methods
@@ -528,15 +535,17 @@
 	   :type float
 	   :initform 5.0
 	   :metadata (:sync t
-			    :json-name "drag-size"))
+			    :json-name "drag_size"))
    (names-unique :accessor names-unique
 	   :type bool
 	   :initform :true
 	   :metadata (:sync t
-			    :json-name "names-unique"))
+			    :json-name "names_unique")))
    (:default-initargs
        :view-name (unicode "Scatter")
-     :model-name (unicode "ScatterModel"))))
+     :model-name (unicode "ScatterModel"))
+
+    (:metaclass traitlets:traitlet-class))
 
 (defclass label (%scatter-base)
   ((icon :accessor icon
@@ -592,15 +601,17 @@
 		:type unicode
 		:initform (unicode "bold")
 		:metadata (:sync t
-				 :json-name "font-weight"))
+				 :json-name "font_weight"))
    (align :accessor align
 	  :type unicode
 	  :initform (unicode "start")
 	  :metadata (:sync t
-			   :json-name "align"))
+			   :json-name "align")))
    (:default-initargs
        :view-name (unicode "Label")
-     :model-name (unicode "LabelModel"))))
+     :model-name (unicode "LabelModel"))
+
+    (:metaclass traitlets:traitlet-class))
 
 (defclass hist (mark)
   ((icon :accessor icon
@@ -671,10 +682,12 @@
 	 :initform (list (cons 'trait 1.0))
 	 :metadata (:sync t
 			  :json-name "opacities"
-			  :display-name "Opacities"))
+			  :display-name "Opacities")))
    (:default-initargs
        :view-name (unicode "Hist")
-     :model-name (unicode "HistModel"))))
+     :model-name (unicode "HistModel"))
+
+    (:metaclass traitlets:traitlet-class))
 
 (defclass boxplot (mark)
   ((x :accessor x
@@ -734,10 +747,12 @@
 	 :initform 30
 	 :metadata (:sync t
 			  :json-name "box_width"
-			  :display-name "Box Width"))
+			  :display-name "Box Width")))
    (:default-initargs
        :view-name (unicode "Boxplot")
-     :model-name (unicode "BoxplotModel"))))
+     :model-name (unicode "BoxplotModel"))
+
+    (:metaclass traitlets:traitlet-class))
 
 (defclass bars (mark)
   ((x :accessor x
@@ -783,7 +798,7 @@
 	 :type unicode
 	 :initform (unicode "auto")
 	 :metadata (:sync t
-			  :json-name "color-mode"))
+			  :json-name "color_mode"))
    (type :accessor type
 	 :type unicode
 	 :initform (unicode "stacked")
@@ -827,10 +842,12 @@
 		:validator %validate-orientation
 		:initform (unicode "vertical")
 		:metadata (:sync t
-				 :json-name "orientation"))
+				 :json-name "orientation")))
    (:default-initargs
        :view-name (unicode "Bars")
-     :model-name (unicode "BarsModel"))))
+     :model-name (unicode "BarsModel"))
+
+    (:metaclass traitlets:traitlet-class))
 
 (defmethod %validate-orientation (object val)
   ((if (equal val (unicode "vertical"))
@@ -886,10 +903,11 @@
 	    :initform 
 	    :metadata (:sync t
 			     :json-name "bins"
-			     :display-name "Number Of Bins"))
+			     :display-name "Number Of Bins")))
 
    ;;TODO ADD THE METHODS
-   ))
+
+   (:metaclass traitlets:traitlet-class))
 
 
 (defclass OHLC (mark)
@@ -957,19 +975,17 @@
 	       :metadata (:sync t
 				:json-name "opacities"
 				:display-name "Opacities")
-    
     (format :accessor format
 	    :type unicode
 	    :initform (unicode "ohcl")
 	    :metadata (:sync t
 			     :json-name "format"
-			     :display-name ""
+			     :display-name "Format")))
   
-
-    
     (:default-initargs
    :view-name (unicode "OHLC")
-    :model-name (unicode "OHLCModel"))
+      :model-name (unicode "OHLCModel"))
+    
     (:metaclass traitlets:traitlet-class))
 
 (defclass pie (mark)
@@ -1056,41 +1072,42 @@
 		    :type unicode
 		    :initform (unicode "inside")
 		    :metadata (:sync t
-				     :json-name "display-labels"))
+				     :json-name "display_labels"))
 
     (display-values :accessor display-values
 		    :type :bool
 		    :initform :false
 		    :metadata (:sync t
-				     :json-name "display-values"))
+				     :json-name "display_values"))
     (values-format :accessor values-format
 		   :type unicode
 		   :initform (unicode ".1f")
 		   :metadata (sync t
-				   :json-name "values-format"))
+				   :json-name "values_format"))
     (label-color :accessor label-color
 		 :type unicode
 		 :initform (unicode "")
 		 :metadata (:sync t
-				  :json-name "label-color"))
+				  :json-name "label_color"))
     (font-size :accessor font-size
 	       :type unicode
 	       :initform (unicode "10px")
 	       :metadata (:sync t
-				:json-name "font-size"))
+				:json-name "font_size"))
 
     ;;handle the default options 
     (font-weight :accessor font-weight
 		 :type unicode
 		 :initform (unicode "normal")
 		 :metadata (:sync t
-				  :json-name "font-weight")))
+				  :json-name "font_weight")))
 
   ;;do topo-load method 
   
     (:default-initargs
    :view-name (unicode "Pie")
-    :model-name (unicode "PieModel"))
+      :model-name (unicode "PieModel"))
+    
     (:metaclass traitlets:traitlet-class))
 
 (defclass map (mark)
@@ -1200,24 +1217,24 @@
 						     (cons "dimension" "x")))
 				   (cons "color" (list (cons "dimension" "color"))))
 		   :metadata (:sync t
-				    :json-name "scales-metadata"))
+				    :json-name "scales_metadata"))
 
    ;; need to add the default to row and colun 
    (row-align :initarg :row-align :accessor row-align
 	      :type unicode
 	      :initform (unicode "start")
 	      :metadata (:sync t
-			       :json-name "row-align"))
+			       :json-name "row_align"))
    (column-align :initarg :column-align :accessor column-align
 	      :type unicode
 	      :initform (unicode "start")
 	      :metadata (:sync t
-			       :json-name "column-align"))
+			       :json-name "column_align"))
    (null-color :initarg :null-color :accessor null-color
 	       :type unicode
 	       :initform (unicode "black")
 	       :metadata (:sync t
-				:json-name "null-color"))
+				:json-name "null_color"))
     (stroke :initarg :stroke :accessor stroke
 	       :type unicode
 	       :initform (unicode "black")

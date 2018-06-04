@@ -3,12 +3,12 @@
 (defclass base-axis (widget)
   ((axis-types :accessor axis-types
 	       :type list
-	       :initform nil)
+	       :initform nil))
    (:default-initargs
     :view-module (unicode "bqplot")
      :model-module (unicode "bqplot")
      :view-module-version *frontend-version*
-     :model-module-version *frontend-version*))
+     :model-module-version *frontend-version*)
   
    (:metaclass traitlets:traitlet-class))
 
@@ -97,13 +97,11 @@
 	       :type list
 	       :initform nil
 	       :metadata (:sync t
-				:json-name "tick_style"))
-   (%ipython-display :accessor ipython-display
-		     :initform nil
-		     
+				:json-name "tick_style")))
    (:default-initargs
        :view-name (unicode "Axis")
-     :model-name (unicode "AxisModel")))
+     :model-name (unicode "AxisModel")
+     :ipython-display nil)
 
    (:metaclass traitlets:traitlet-class))
 
@@ -127,10 +125,10 @@
 	  :initform (make-instance 'scale)
 	  :metadata (:sync t
 			   :json-name "scale"
-			   *widget-serialization*))
+			   *widget-serialization*)))
    (:default-initargs
        :view-name (unicode "ColorAxis")
-     :model-name (unicode "ColorAxisModel")))
+     :model-name (unicode "ColorAxisModel"))
 
   (:metaclass traitlets:traitlet-class))
      

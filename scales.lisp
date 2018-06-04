@@ -19,25 +19,29 @@
 				) ;;;TODO: Fill in class names
                 )
    (precedence :accessor precedence
-               :initform 1
-               :type integer)
+               :type integer
+	       :initform 1)
    (domain-class :accessor domain-class
                  :type float
-                 :initform 0)
+                 :initform nil)
    (reverse :accessor reverse
             :type bool
-            :initform :null
+            :initform :false
             :metadata (:sync t
                              :json-name "reverse"))
-   (%ipython-display :accessor ipython-display
-                     :initform nil))
+   (allow-padding :accessor allow-padding
+		  :type bool
+		  :initform :true
+		  :metadata (:sync t
+				   :json-name "allow_padding")))
   (:default-initargs
    :view-name (unicode "Scale")
     :model-name (unicode "ScaleModel")
     :view-module (unicode "bqplot")
     :model-module (unicode "bqplot")
     :view-module-version *frontend-version*
-    :model-module-version *frontend-version*)
+    :model-module-version *frontend-version*
+    :ipython-display nil)
   (:metaclass traitlets:traitlet-class))
 
 (defclass geo-scale (scale)
@@ -51,7 +55,7 @@
 		 :type float
 		 :initform 190.0
 		 :metadata (:sync t
-				  :json-name "scale-factor"))
+				  :json-name "scale_factor"))
    (center :accessor center
 	   :type list
 	   :initform (list (cons 0 60)) 
@@ -79,17 +83,17 @@
 		 :type float
 		 :initform 250.0
 		 :metadata (:sync t
-				  :json-name "scale-factor"))
+				  :json-name "scale_factor"))
+    (rotate :accessor rotate
+	   :type list
+	   :initform (list (cons 96 0))
+	   :metadata (:sync t
+			    :json-name "rotate"))
    (center :accessor center
 	   :type list
 	   :initform (list (cons 0 60)) 
 	   :metadata (:sync t
 			    :json-name "center"))
-   (rotate :accessor rotate
-	   :type list
-	   :initform (list (cons 96 0))
-	   :metadata (:sync t
-			    :json-name "rotate"))
    (parallels :accessor parallels
 	   :type list
 	   :initform (list  (cons 29.5 45.5))
@@ -110,15 +114,15 @@
   (:default-initargs
    :view-name (unicode "Albers")
     :model-name (unicode "AlbersModel"))
-  (:metaclass traitlets:traitlet-class))
-
+  
+  (:metaclass traitlets:traitlet-class)) 
 
 (defclass albers-usa (geo-scale)
   ((scale-factor :accessor  scale-factor
 		 :type float
 		 :initform 1200.0
 		 :metadata (:sync t
-				  :json-name "scale-factor"))
+				  :json-name "scale_factor"))
    (translate :accessor :translate translate
 		 :type list
 		 :initform (list (cons 600 490))
@@ -135,7 +139,8 @@
   
    (:default-initargs
    :view-name (unicode "AlbersUSA")
-    :model-name (unicode "AlbersUSAModel"))
+     :model-name (unicode "AlbersUSAModel"))
+   
    (:metaclass traitlets:traitlet-class))
 
 
@@ -144,7 +149,7 @@
 		 :type float
 		 :initform 145.0
 		 :metadata (:sync t
-				  :json-name "scale-factor"))
+				  :json-name "scale_factor"))
    (center :accessor center 
 	   :type list
 	   :initform (list (cons 0 60)) 
@@ -158,7 +163,8 @@
 	   :initform (unicode "numpy.number"))) ;;;;TODO kevin has no idea whats going on 
    (:default-initargs
    :view-name (unicode "EquiRectangular")
-    :model-name (unicode "EquiRectangularModel"))
+     :model-name (unicode "EquiRectangularModel"))
+   
    (:metaclass traitlets:traitlet-class))
    
   
@@ -167,7 +173,7 @@
 		 :type float
 		 :initform 145.0
 		 :metadata (:sync t
-				  :json-name "scale-factor"))
+				  :json-name "scale_factor"))
    (center :accessor center 
 	   :type list
 	   :initform (list (cons 0 60)) 
@@ -183,7 +189,7 @@
 	       :initform 90.0 
 	       :validator validate-clip-angle 
 	       :metadata (:sync t
-	                  :json-name "clip-angle"))
+	                  :json-name "clip_angle"))
    (precision :accessor :precision precision
 	       :type float
 	       :initform 0.1
@@ -197,7 +203,8 @@
 	   :initform (unicode "numpy.number"))) ;;;;TODO kevin has no idea whats going on 
  (:default-initargs
    :view-name (unicode "Orthographic")
-    :model-name (unicode "OrthographicModel"))
+   :model-name (unicode "OrthographicModel"))
+ 
  (:metaclass traitlets:traitlet-class))
 
   
@@ -213,7 +220,7 @@
 		 :type float
 		 :initform 145.0
 		 :metadata (:sync t
-				  :json-name "scale-factor"))
+				  :json-name "scale_factor"))
    (center :accessor center 
 	   :type list
 	   :initform (list (cons 0 60))
@@ -224,7 +231,7 @@
 	       :initform 89.999 
 	       :validator validate-clip-angle
 	       :metadata (:sync t
-	                  :json-name "clip-angle"))
+	                  :json-name "clip_angle"))
    (precision :accessor precision
 	       :type float
 	       :initform 0.1
@@ -238,7 +245,8 @@
 	   :initform (unicode "numpy.number"))) ;;;;TODO kevin has no idea whats going on 
  (:default-initargs
    :view-name (unicode "Gnomonic")
-    :model-name (unicode "GnomonicModel"))
+   :model-name (unicode "GnomonicModel"))
+ 
   (:metaclass traitlets:traitlet-class))
 
 
@@ -247,7 +255,7 @@
 		 :type float
 		 :initform 145.0
 		 :metadata (:sync t
-				  :json-name "scale-factor"))
+				  :json-name "scale_factor"))
    (center :accessor center 
 	   :type list
 	   :initform (list (cons 0 60)) 
@@ -263,7 +271,7 @@
 	       :initform 179.9999 
 	       :validator validate-clip-angle
 	       :metadata (:sync t
-	                  :json-name "clip-angle"))
+	                  :json-name "clip_angle"))
    (precision :accessor precision
 	       :type float
 	       :initform 0.1
@@ -277,7 +285,8 @@
 	   :initform (unicode "numpy.number"))) ;;;;TODO kevin has no idea whats going on
  (:default-initargs
    :view-name (unicode "Stereographic")
-    :model-name (unicode "StereographicModel"))
+   :model-name (unicode "StereographicModel"))
+ 
   (:metaclass traitlets:traitlet-class))
 
 (defclass linear-scale (scale)
@@ -310,16 +319,17 @@
 	      :initform 0.6
 	      :validator validate-min-range 
 	      :metadata (:sync t
-			       :json-name "min-range"))
+			       :json-name "min_range"))
    (mid-range :accessor mid-range
 	      :type float
 	      :initform 0.8
 	      :validator validate-mid-range
 	      :metadata (:sync t
-			       :json-name "mid-range"))
+			       :json-name "mid_range"))
    (:default-initargs
    :view-name (unicode "LinearScale")
-    :model-name (unicode "LinearScaleModel"))
+     :model-name (unicode "LinearScaleModel"))
+   
   (:metaclass traitlets:traitlet-class))
 
 ;;;;Validator for min-range making sure its between [0,1]
@@ -355,10 +365,10 @@
 	:initform 1              ;;;;tentative 
 	:metadata (:sync t
 			 :json-name "max")))
-
  (:default-initargs
    :view-name (unicode "LogScale")
-    :model-name (unicode "LogScaleModel"))
+   :model-name (unicode "LogScaleModel"))
+ 
  (:metaclass traitlets:traitlet-class))
 
 ;;HOW DO WE DO DATES?
@@ -398,11 +408,11 @@
 	   :type list
 	   :initform nil
 	   :metadata (:sync t
-			    :json-name "domain")))
-		    
+			    :json-name "domain")))	    
  (:default-initargs
    :view-name (unicode "DataScale")
-    :model-name (unicode "DataScaleModel"))
+   :model-name (unicode "DataScaleModel"))
+ 
  (:metaclass traitlets:traitlet-class))
 
 (defclass color-scale (scale)
@@ -416,7 +426,7 @@
 	       :type unicode
 	       :initform (unicode "linear")
 	       :metadata (:sync t
-				:json-name "scale-type"))
+				:json-name "scale_type"))
    (colors :accessor colors
 	   :type list
 	   :initform nil ;;;; not sure how to deal with the trait = color part
@@ -444,7 +454,8 @@
 			    :json-name "scheme")))
     (:default-initargs
    :view-name (unicode "ColorScale")
-    :model-name (unicode "ColorScaleModel"))
+      :model-name (unicode "ColorScaleModel"))
+    
     (:metaclass traitlets:traitlet-class))
 
 (defclass date-color-scale (color-scale)
@@ -472,7 +483,8 @@
 			 :json-name "mid")))
    (:default-initargs
    :view-name (unicode "DateColorScale")
-    :model-name (unicode "DataColorScaleModel"))
+     :model-name (unicode "DataColorScaleModel"))
+   
    (:metaclass traitlets:traitlet-class))
 
 (defclass ordinal-color-scale (color-scale)
@@ -489,5 +501,6 @@
 			    :json-name "domain")))
     (:default-initargs
    :view-name (unicode "DateColorScale")
-    :model-name (unicode "DataColorScaleModel"))
+      :model-name (unicode "DataColorScaleModel"))
+    
    (:metaclass traitlets:traitlet-class))

@@ -5,14 +5,16 @@
 (defclass interaction (widget)
   ((types :accessor types
 	  :type list
-	  :initform nil)
+	  :initform nil))
    (:default-initargs
 	:view-name (unicode "Interaction")
       :model-name (unicode "BaseModel")
       :view-module (unicode "bqplot")
       :model-name (unicode "bqplot")
       :view-module-version *frontend-version*
-      :model-module-version *frontend-version*))
+      :model-module-version *frontend-version*
+      :ipython-display nil)
+   
   (:metaclass traitlets:traitlet-class))
 
 (defclass hand-draw (interaction)
@@ -35,10 +37,10 @@
 	  :type float
 	  :initform nil
 	  :metadata (:sync t
-			   :json-name "max_x"))
+			   :json-name "max_x")))
    (:default-initargs
        :view-name (unicode "HandDraw")
-     :model-name (unicode "HandDrawModel")))
+     :model-name (unicode "HandDrawModel"))
    
   (:metaclass traitlets:traitlet-class))
 
@@ -53,11 +55,15 @@
 	       :initform :true
 	       :metadata (:sync t
 				:json-name "allow_zoom"))
-   
-					;TODO: scales
+   (scales :accessor scales
+	   :type list
+	   :initform (list (cons 'trait (cons 'trait (make-instance 'scale))))
+	   :metadata (:sync t
+			    :json-name "scales"
+			    *widget-serialization*)))
    (:default-initargs
     :view-name (unicode "PanZoom")
-    :model-name (unicode "PanZoomModel")))
+    :model-name (unicode "PanZoomModel"))
 
   (:metaclass trailets:traitlet-class))
 
@@ -68,15 +74,13 @@
 	  :initform nil
 	  :metadata (:sync t
 			   :json-name "marks"
-			   *widget-serialization*))
+			   *widget-serialization*)))
    (:default-initargs
-    :view-name (unicode "Selector")))
+    :view-name (unicode "Selector"))
    
   (:metaclass traitlets:traitlet-class))
 
 					;TODO: def reset
-
-   
 
 (defclass one-d-selector (selector)
   ((scale :accessor scale
@@ -84,9 +88,9 @@
 	  :metadata (:sync t
 			   :json-name "one-d-selector"
 			   :dimension "x"
-			   *widget-serialization*))
+			   *widget-serialization*)))
    (:default-initargs
-    :model-name (unicode "OneDSelectorModel")))
+    :model-name (unicode "OneDSelectorModel"))
 
   (:metaclass traitlets:trailet-class))
 
@@ -102,9 +106,10 @@
 	    :metadata (:sync t
 			     :json-name "y_scale"
 			     :dimension "y"
-			     *widget-serialization*))
+			     *widget-serialization*)))
    (:default-initargs
-       :model-name (unicode "TwoDSelectorModel")))
+    :model-name (unicode "TwoDSelectorModel"))
+   
   (:metaclass traitlets:traitlet-class))
 
 (defclass fast-interval-selector (one-d-selector)
@@ -123,10 +128,10 @@
 	 :type float
 	 :initform nil
 	 :metadata (:sync t
-			  :json-name "size"))
+			  :json-name "size")))
    (:default-initargs
        :view-name (unicode "FastIntervalSelector")
-     :model-name (unicode "FastIntervalSelectorModel")))
+     :model-name (unicode "FastIntervalSelectorModel"))
   
   (:metaclass traitlets:trailet-class))
 
@@ -146,10 +151,10 @@
 	  :type unicode
 	  :initform (unicode "")
 	  :metadata (:sync t
-			   :json-name "color"))
+			   :json-name "color")))
    (:default-initargs
        :view-name (unicode "IndexSelector")
-     :model-name (unicode "IndexSelectorModel")))
+     :model-name (unicode "IndexSelectorModel"))
    
   (:metaclass traitlets:traitlet-class))
 
@@ -174,10 +179,10 @@
 	  :type unicode
 	  :initform nil
 	  :metadata (:sync t
-			   :json-name "color"))
+			   :json-name "color")))
    (:default-initargs
        :view-name (unicode "BrushIntervalSelector")
-     :model-name (unicode "BrushIntervalSelectorModel")))
+     :model-name (unicode "BrushIntervalSelectorModel"))
 
   (:metaclass traitlets:trailet-class))
 
@@ -201,10 +206,10 @@
 	 :type unicode
 	 :initform (unicode "")
 	 :metadata (:sync t
-			  :json-name "color"))
+			  :json-name "color")))
    (:default-initargs
     :view-name (unicode "BrushSelector")
-    :model-name (unicode "BrushSelectorModel")))
+    :model-name (unicode "BrushSelectorModel"))
   
   (:metaclass traitlets:trailet-class))
 
@@ -220,29 +225,32 @@
 	     :initform nil
 	     :metadata (:sync t
 			      :json-name "selected"))
-
-					;TODO: %selected
+   (%selected :initarg :%selected :accessor %selected
+	     :type list
+	     :initform nil
+	     :metadata (:sync t
+			      :json-name "_selected"))
    (show-names :initarg :show-names :accessor show-names
 	       :type bool
 	       :initform :true
 	       :metadata (:sync t
-				:json-name "show_names"))
+				:json-name "show_names")))
    (:default-initargs
     :view-name (unicode "MultiSelector")
-    :model-name (uncode "MultiSelectorModel")))
+    :model-name (uncode "MultiSelectorModel"))
     
   (:metaclass traitlets:traitlet-class))
 
 ;TODO: def hidden_selected_changed
 
 (defclass lasso-selector (two-d-selector)
-  ((color :selector color
+  ((color :accessor color
 	  :type unicode
 	  :initform (unicode "")
 	  :metadata (:sync t
 			   :json-name "color"))
    (:defualt-initargs
-    :view-name (unicode "LassoSelector")
+       :view-name (unicode "LassoSelector")
     :model-name (unicode "LassoSelectorModel")))
 
   (:metaclass traitlets:traitlet-class))
